@@ -1,0 +1,34 @@
+version: "3.3"
+
+services:
+  db:
+    image: mysql:5.7
+    command: --init-file /data/application/init.sql
+    volumes:
+      - ./sql/init.sql:/data/application/init.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: short
+      MYSQL_DATABASE: tsugi
+      MYSQL_USER: ltiuser
+      MYSQL_PASSWORD: ltipassword
+
+  py4e:
+    build: .
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+#    volumes:
+#      - ./php/:/var/www/html
+
+#  nginx:
+#    build: ./nginx
+#    ports:
+#      - 80:80
+#    volumes:
+#      - ./uploads:/home/factory/workshop/uploads
+#    depends_on:
+#      - workshop
+
+volumes:
+  mysqldata:
