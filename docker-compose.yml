@@ -3,21 +3,28 @@ version: "3.3"
 services:
   db:
     image: mysql:5.7
-    command: --init-file /data/application/init.sql
-    volumes:
-      - ./sql/init.sql:/data/application/init.sql
+    container_name: tsugi_db
+#    command: --init-file /data/application/init.sql
+#    volumes:
+#      - ./sql/init.sql:/data/application/init.sql
     environment:
-      MYSQL_ROOT_PASSWORD: short
+      MYSQL_ROOT_PASSWORD: tsugi_root_pw
       MYSQL_DATABASE: tsugi
       MYSQL_USER: ltiuser
       MYSQL_PASSWORD: ltipassword
-
+    ports:
+      - "33306:3306"
+    volumes:
+      - ./.docker_data/mysql:/var/lib/mysql:delegated
   py4e:
     build: .
     ports:
-      - "80:80"
+      - "8888:80"
     depends_on:
       - db
+    command: bash -c "cd py4e && ./tsugi/docker-compose-init.sh"
+    stdin_open: true
+    tty: true
 #    volumes:
 #      - ./php/:/var/www/html
 
