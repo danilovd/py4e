@@ -28,9 +28,7 @@ $loader = require_once($dirroot."/vendor/autoload.php");
 
 // If we just are using Tsugi but not part of another site
 // $apphome = false;
-$CFG->apphome = "http://localhost:8888/py4e";
-$CFG->context_title = "Python for Everybody";
-$CFG->lessons = $CFG->dirroot.'/../lessons.json';
+
 // $apphome = "http://localhost:8888/tsugi-org";
 
 // Set the path to the Tsugi folder without a trailing slash
@@ -58,6 +56,11 @@ $CFG = new \Tsugi\Config\ConfigInfo($dirroot, $wwwroot);
 unset($wwwroot);
 unset($dirroot);
 $CFG->loader = $loader;
+
+$CFG->apphome = "http://localhost:8888/py4e";
+$CFG->context_title = "Python for Everybody";
+$CFG->lessons = $CFG->dirroot.'/../lessons.json';
+
 if ( $apphome ) $CFG->apphome = $apphome; // Leave unset if not embedded
 unset($apphome);
 
@@ -77,7 +80,7 @@ unset($apphome);
 // that can create tables.   To make the initial tables go into Admin
 // to run the upgrade.php script which auto-creates the tables.
 //$CFG->pdo       = 'mysql:host=127.0.0.1;dbname=tsugi';
-$CFG->pdo       = 'mysql:host=db;port=3306;dbname=tsugi'; // MAMP
+$CFG->pdo       = 'mysql:host=db;dbname=tsugi'; // MAMP
 $CFG->dbuser    = 'ltiuser';
 $CFG->dbpass    = 'ltipassword';
 
